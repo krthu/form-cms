@@ -22,13 +22,13 @@ const FormView = () => {
                             )}
                             {question.type === 'multiple-choice' && (
                                 <div>
-                                    {question.options.map(( option) => (
-                                        <label>{option}
-                                     <input 
-                                        type="radio"
-                                        name={question.id}
-                                     />
-                                     {option}   
+                                    {question.options.map(( option, index) => (
+                                    <label key={index}>{option}
+                                        <input 
+                                            type="radio"
+                                            name={question.id}
+                                        />
+                                     
                                      </label>
                                     ))}
                                 </div>

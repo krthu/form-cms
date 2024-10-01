@@ -7,11 +7,36 @@ import CreateQuestion from './components/CreateQuestion';
 import FormView from './components/FormView.jsx';
 
 function App() {
+  const ADD_QUESTION = 'add-question', VIEWFORM = 'view-form'
+  const [view, setView] = useState(VIEWFORM);
+
+  let content =  null
+
+  switch (view) {
+    case ADD_QUESTION:
+      content = <CreateQuestion />
+      break;
+
+    case VIEWFORM:
+        content = <FormView />
+    default:
+      content = <FormView />
+      break;
+  }
 
   return (
     <div>
-      <FormView />
-      <CreateQuestion />
+      <header>
+        <nav>
+          <ul>
+            <li onClick={() => setView(ADD_QUESTION)}>Add question</li>
+            <li onClick={() => setView(VIEWFORM)}>View Form</li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        {content}
+      </main>
     
     </div>
   )
