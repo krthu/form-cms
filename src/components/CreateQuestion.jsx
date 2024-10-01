@@ -98,7 +98,7 @@ const CreateQuestion = () => {
                 )}
                 </div>
             )}    
-            <button onClick={handleSaveQuestion}>Save</button>
+            <button onClick={handleSaveQuestion}>Add</button>
 
 
         </div>
