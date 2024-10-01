@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import { questionReducer } from "./questions";
+import { formsReducer } from "./forms";
 
 
 const rootReducer = combineReducers({
-    questions: questionReducer
+    forms: formsReducer
 })
 
 export {rootReducer};

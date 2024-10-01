@@ -2,7 +2,7 @@ import { useState } from "react";
 import { QUESTION_TYPES } from "../features/questionTypes";
 import { useDispatch } from "react-redux";
 
-import { actions } from "../features/questions";
+import { actions } from "../features/forms";
 
 const CreateQuestion = () => {
     const [question, setQuestion] = useState('');
