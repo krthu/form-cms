@@ -2,37 +2,38 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 import { act } from "react-dom/test-utils";
 
 const addForm = createAction('add form');
+const editForm = createAction('edit form');
 const addQuestion = createAction('add question');
 const editQuestion = createAction('edit question');
 const deleteQuestion = createAction('delete question');
 
 
-const actions = {addForm, addQuestion, editQuestion, deleteQuestion}
+const actions = { addForm, editForm, addQuestion, editQuestion, deleteQuestion }
 
 const initialState = [
     {
-    formID: '1',
-    name: 'Utvärdering 1',
-    questions: [{
-        id: '1',
-        type: 'text',
-        text: 'Kalle du?'
+        formID: '1',
+        name: 'Utvärdering 1',
+        questions: [{
+            id: '1',
+            type: 'text',
+            text: 'Kalle du?'
         }]
     },
     {
-    formID: '2',
-    name: 'Utvärdering 2',
-    questions: [{
-        id: '3',
-        type: 'text',
-        text: 'Vad heter du?'
+        formID: '2',
+        name: 'Utvärdering 2',
+        questions: [{
+            id: '3',
+            type: 'text',
+            text: 'Vad heter du?'
         },
-    
+
         {
-        id: '5',
-        type: 'multiple-choice',
-        text: 'Tycker du ett eller 2',
-        options: ['val 1', 'val 2']
+            id: '5',
+            type: 'multiple-choice',
+            text: 'Tycker du ett eller 2',
+            options: ['val 1', 'val 2']
         }
         ]
     }
@@ -40,14 +41,14 @@ const initialState = [
 
 // Types of question = text, multiple-choice
 
-const createNewQuestion = (type, text, options, id=crypto.randomUUID()) => {
+const createNewQuestion = (type, text, options, id = crypto.randomUUID()) => {
     const newQuestion = {
         id: id,
         type: type,
         text: text
     }
 
-    if (type === 'multiple-choice'){
+    if (type === 'multiple-choice') {
         newQuestion.options = options || [];
     }
     return newQuestion
@@ -63,13 +64,21 @@ const formsReducer = createReducer(initialState, builder => {
                 name: action.payload,
                 questions: []
             };
-          
-            return([...state, newForm ])
+
+            return ([...state, newForm])
+        })
+
+        .addCase(editForm, (state, action) => {
+            return state.map(form => {
+                return form.formID === action.payload.formID
+                    ? { ...form, name: action.payload.name }
+                    : form
+            });
         })
 
         .addCase(addQuestion, (state, action) => {
             const newState = state.map(form => {
-                if (form.formID === action.payload.formID){
+                if (form.formID === action.payload.formID) {
                     const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
                     return {
                         ...form,
@@ -82,8 +91,8 @@ const formsReducer = createReducer(initialState, builder => {
             return newState;
             // Worked !
             // const formToAddTo = state.find(form =>form.formID === action.payload.formID);
-         
-            
+
+
             // if (formToAddTo){
             //     const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
             //     formToAddTo.questions.push(newQuestion);
@@ -93,19 +102,19 @@ const formsReducer = createReducer(initialState, builder => {
 
         .addCase(editQuestion, (state, action) => {
             const newState = state.map(form => {
-                if (form.formID === action.payload.formID){
+                if (form.formID === action.payload.formID) {
                     const newQuestionsArray = form.questions.map(question => {
-                        if(question.id === action.payload.id){
+                        if (question.id === action.payload.id) {
                             const editedQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options, action.payload.id)
                             return editedQuestion;
-                        } else{
+                        } else {
                             return question
                         }
                     })
-                    return {...form, questions: newQuestionsArray}
+                    return { ...form, questions: newQuestionsArray }
                 }
                 return form;
-                
+
             })
             return newState;
 
@@ -123,7 +132,7 @@ const formsReducer = createReducer(initialState, builder => {
             //         newQuestionsArray.push(newQuestion);
             //     }
             // })
-        
+
             // form.questions = newQuestionsArray;
 
         })
@@ -131,8 +140,8 @@ const formsReducer = createReducer(initialState, builder => {
         .addCase(deleteQuestion, (state, action) => {
             return state.map(form => {
                 return form.formID === action.payload.formID
-                ? {...form, questions: form.questions.filter(q => q.id !== action.payload.questionID)}
-                : form
+                    ? { ...form, questions: form.questions.filter(q => q.id !== action.payload.questionID) }
+                    : form
             })
 
             // return(state.map(form => {
@@ -158,4 +167,4 @@ const formsReducer = createReducer(initialState, builder => {
         })
 })
 
-export {actions, formsReducer};
+export { actions, formsReducer };
