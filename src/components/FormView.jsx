@@ -1,18 +1,31 @@
 import { useSelector } from "react-redux";
 
+import { Link, useParams } from "react-router-dom";
+
 const FormView = () => {
 
-    const questions = useSelector(state => state.questions)
+    const forms = useSelector(state => state.forms)
+    const params = useParams();
+    const formID = params.formID
+    const form = forms.find(f => f.formID === formID)
+
+    if (!form){
+        return(
+            <div>Form not found</div>
+        )
+    }
 
 
 
     return (
         <div>
             <h2>FormView</h2>
-
-            {questions && (
+            <Link to={`/forms/${formID}/add-question`}>Add Question</Link>
+            
+            {form && (
                 <div>
-                    {questions.map((question) => (
+                    <h4>Questions</h4>
+                    {form.questions.map((question) => (
                         <div key={question.id}>
                             <h3>{question.text}</h3>
                             {question.type === 'text' && (

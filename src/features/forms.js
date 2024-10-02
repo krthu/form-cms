@@ -8,22 +8,30 @@ const actions = {addForm, addQuestion}
 
 const initialState = [
     {
-    formID: 1,
+    formID: '1',
     name: 'Utvärdering 1',
     questions: [{
-        id: 1,
+        id: '1',
         type: 'text',
         text: 'Kalle du?'
         }]
     },
     {
-    formID: 2,
+    formID: '2',
     name: 'Utvärdering 2',
     questions: [{
-        id: 3,
+        id: '3',
         type: 'text',
         text: 'Vad heter du?'
-        }]
+        },
+    
+        {
+            id: '5',
+            type: 'multiple-choice',
+            text: 'Tycker du ett eller 2',
+            options: ['val 1', 'val 2']
+            }
+        ]
     }
 ];
 
@@ -56,8 +64,10 @@ const formsReducer = createReducer(initialState, builder => {
         })
 
         .addCase(addQuestion, (state, action) => {
-           
+           console.log(action.payload.formID);
             const formToAddTo = state.find(form =>form.formID === action.payload.formID);
+            console.log(formToAddTo)
+            
             if (formToAddTo){
                 const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
                 formToAddTo.questions.push(newQuestion);

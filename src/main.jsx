@@ -5,6 +5,7 @@ import './index.css'
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './features/rootreducer.js';
 import { Provider } from 'react-redux';
+import { HashRouter as Router } from 'react-router-dom';
 
 const store = configureStore({
   reducer : rootReducer
@@ -13,7 +14,9 @@ const store = configureStore({
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store = {store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </StrictMode>,
 )

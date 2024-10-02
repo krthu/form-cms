@@ -1,16 +1,29 @@
 import { useState } from "react";
 import { QUESTION_TYPES } from "../features/questionTypes";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { actions } from "../features/forms";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CreateQuestion = () => {
     const [question, setQuestion] = useState('');
     const [choiceText, setChoiceText] = useState('');
     const [type, setType] = useState(QUESTION_TYPES[0].value);
     const [choices, setChoices] = useState([]);
+    const forms = useSelector(state => state.forms)
+    const params = useParams();
+    const formID = params.formID;
+    const form = forms.find(f => f.formID === formID);
 
     const dispatch = useDispatch();
+
+    if (!form){
+        return(
+            <div>Form not found</div>
+        )
+    }
 
 
     const handleChoiceAdded = () => {
@@ -29,6 +42,7 @@ const CreateQuestion = () => {
             return
         }
         const newQuestion = {
+            formID: formID,
             text: question, 
             type: type
         }
@@ -52,6 +66,8 @@ const CreateQuestion = () => {
 
     return(
         <div>
+            <Link to={`/forms/${formID}`}>Back</Link>
+            <h2>{form.name}</h2>
             <h2>Create Question</h2>  
             <div>
                 <label>Question</label>
