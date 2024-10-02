@@ -1,10 +1,12 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 const addForm = createAction('add form');
 const addQuestion = createAction('add question');
+const editQuestion = createAction('edit question');
 
 
-const actions = {addForm, addQuestion}
+const actions = {addForm, addQuestion, editQuestion}
 
 const initialState = [
     {
@@ -37,9 +39,9 @@ const initialState = [
 
 // Types of question = text, multiple-choice
 
-const createNewQuestion = (type, text, options) => {
+const createNewQuestion = (type, text, options, id=crypto.randomUUID()) => {
     const newQuestion = {
-        id: crypto.randomUUID(),
+        id: id,
         type: type,
         text: text
     }
@@ -64,15 +66,61 @@ const formsReducer = createReducer(initialState, builder => {
         })
 
         .addCase(addQuestion, (state, action) => {
-           console.log(action.payload.formID);
+ 
             const formToAddTo = state.find(form =>form.formID === action.payload.formID);
-            console.log(formToAddTo)
+         
             
             if (formToAddTo){
                 const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
                 formToAddTo.questions.push(newQuestion);
                // state.push(newQuestion)
             }
+        })
+
+        .addCase(editQuestion, (state, action) => {
+            // const form = state.find(form => form.formID === action.payload.formID)
+            // if (!form) {
+            //     return;
+            // }
+            // const question = form.questions.find(q => q.id === action.payload.id);
+
+            // // Handle the case where the question is not found
+            // if (!question) {
+            //     return;
+            // }
+            // question.text = action.payload.text;
+            // question.type = action.payload.type;
+            // if (question.type === 'multiple-choice') {
+            //     question.options = action.payload.options || [];
+            // }
+            // return state;
+
+
+
+            const form = state.find(form => form.formID === action.payload.formID)
+            const newQuestionsArray = []
+            form.questions.forEach(question => {
+                if (question.id !== action.payload.id){
+                    newQuestionsArray.push(question);
+                } else{
+                    const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options, action.payload.id)
+                    newQuestionsArray.push(newQuestion);
+                }
+            })
+        
+            form.questions = newQuestionsArray;
+            // const newState = [];
+
+            // state.forEach(formState => {
+            //     if(form.formID === formState.formID){
+            //         newState.push(form);
+            //     } else{
+            //         newState.push(formState);
+            //     }
+            // })
+
+            // return newState;
+            // const question = form.questions.find(question.id === action.payload.id)
         })
 })
 

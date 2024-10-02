@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import './FormView.css'
 
 import { Link, useParams } from "react-router-dom";
+import Question from "./Question";
 
 const FormView = () => {
 
@@ -30,30 +31,8 @@ const FormView = () => {
 
 
                     {form.questions.map((question) => (
-                        <div key={question.id} className="question">
-                            <h3>{question.text}</h3>
-                            {question.type === 'text' && (
-                                <input type="text"
-                                placeholder="Svar"
-                                    
-                                />
-                            )}
-                            {question.type === 'multiple-choice' && (
-                                <div className='options-container'>
-                                    {question.options.map(( option, index) => (
-                                    <label key={index}>{option}
-                                        <input 
-                                            type="radio"
-                                            name={question.id}
-                                        />
-                                     
-                                     </label>
-                                    ))}
-                                </div>
-                                
-                                )}
-                        
-                        </div>
+                        <Question question={question} formID={formID}/>
+   
                     ))}
                     
                 </div>

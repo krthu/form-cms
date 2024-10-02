@@ -27,5 +27,10 @@
 .form-name{
     text-align: center;
     font-size: 2rem;
+}
 
+.options-list{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
 }
