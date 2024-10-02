@@ -43,14 +43,6 @@ const Question = (props) => {
             
         } 
         toggleEdit();
-        // // Check all values present
-        // if (question.trim() === ''){
-        //     return
-        // }
-        // if (type === 'multiple-choice' && choices.length === 0){
-        //     return
-        // }
-
     }
     const handleDelete = () => {
         const deletePayload = {
@@ -59,6 +51,12 @@ const Question = (props) => {
         }
         dispatch(actions.deleteQuestion(deletePayload))
     }
+
+    const handleRemoveOption = (indexToRemove) => {
+        setChoices(choices.filter((choise, index) => index !== indexToRemove))
+    }
+
+
     return (
         <div key={question.id}>
             {editMode ? (
@@ -82,8 +80,6 @@ const Question = (props) => {
                             ))}
 
                         </select>
-
-
                     </div>
 
                     {type === 'multiple-choice' && (
@@ -102,7 +98,7 @@ const Question = (props) => {
                                     <h3>Options</h3>
                                     <ul className="options-list">
                                         {choices.map((choice, index) => (
-                                            <li key={index}>{choice}</li>
+                                            <li key={index}>{choice} <button onClick={() => handleRemoveOption(index)}>X</button></li>
                                         ))}
                                     </ul>
                                 </div>
@@ -138,15 +134,16 @@ const Question = (props) => {
 
                 </div>
             )}
-            
-            <button onClick={handleSaveQuestion}>{editMode ? "Save" : "Edit"}</button>
-            {editMode && (
-                <>
-                    <button onClick={toggleEdit}>Cancel</button>
-                    <button onClick={handleDelete}>Delete</button>
-                </> 
-                
-                )}
+            <div className="button-container">
+                <button onClick={handleSaveQuestion}>{editMode ? "Save" : "Edit"}</button>
+                {editMode && (
+                    <>
+                        <button onClick={toggleEdit}>Cancel</button>
+                        <button onClick={handleDelete} className="question-delete-button">Delete</button>
+                    </> 
+                    
+                    )}
+            </div>
         </div>
 
     )

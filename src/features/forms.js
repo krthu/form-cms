@@ -63,76 +63,98 @@ const formsReducer = createReducer(initialState, builder => {
                 name: action.payload,
                 questions: []
             };
-            state.push(newForm)
+          
+            return([...state, newForm ])
         })
 
         .addCase(addQuestion, (state, action) => {
- 
-            const formToAddTo = state.find(form =>form.formID === action.payload.formID);
+            const newState = state.map(form => {
+                if (form.formID === action.payload.formID){
+                    const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
+                    return {
+                        ...form,
+                        questions: [...form.questions, newQuestion]
+                    }
+                }
+                return form;
+
+            });
+            return newState;
+            // Worked !
+            // const formToAddTo = state.find(form =>form.formID === action.payload.formID);
          
             
-            if (formToAddTo){
-                const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
-                formToAddTo.questions.push(newQuestion);
-               // state.push(newQuestion)
-            }
+            // if (formToAddTo){
+            //     const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
+            //     formToAddTo.questions.push(newQuestion);
+            //    // state.push(newQuestion)
+            // }
         })
 
         .addCase(editQuestion, (state, action) => {
-            // const form = state.find(form => form.formID === action.payload.formID)
-            // if (!form) {
-            //     return;
-            // }
-            // const question = form.questions.find(q => q.id === action.payload.id);
-
-            // // Handle the case where the question is not found
-            // if (!question) {
-            //     return;
-            // }
-            // question.text = action.payload.text;
-            // question.type = action.payload.type;
-            // if (question.type === 'multiple-choice') {
-            //     question.options = action.payload.options || [];
-            // }
-            // return state;
-
-
-
-            const form = state.find(form => form.formID === action.payload.formID)
-            const newQuestionsArray = []
-            form.questions.forEach(question => {
-                if (question.id !== action.payload.id){
-                    newQuestionsArray.push(question);
-                } else{
-                    const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options, action.payload.id)
-                    newQuestionsArray.push(newQuestion);
+            const newState = state.map(form => {
+                if (form.formID === action.payload.formID){
+                    const newQuestionsArray = form.questions.map(question => {
+                        if(question.id === action.payload.id){
+                            const editedQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options, action.payload.id)
+                            return editedQuestion;
+                        } else{
+                            return question
+                        }
+                    })
+                    return {...form, questions: newQuestionsArray}
                 }
+                return form;
+                
             })
-        
-            form.questions = newQuestionsArray;
-            // const newState = [];
+            return newState;
 
-            // state.forEach(formState => {
-            //     if(form.formID === formState.formID){
-            //         newState.push(form);
+
+            // const form = state.find(form => form.formID === action.payload.formID)
+
+
+
+            // const newQuestionsArray = []
+            // form.questions.forEach(question => {
+            //     if (question.id !== action.payload.id){
+            //         newQuestionsArray.push(question);
             //     } else{
-            //         newState.push(formState);
+            //         const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options, action.payload.id)
+            //         newQuestionsArray.push(newQuestion);
             //     }
             // })
+        
+            // form.questions = newQuestionsArray;
 
-            // return newState;
-            // const question = form.questions.find(question.id === action.payload.id)
         })
 
         .addCase(deleteQuestion, (state, action) => {
-            const form = state.find(f => f.formID === action.payload.formID);
-            const newQuestionsArray = [];
-            form.questions.forEach(question => {
-                if (question.id !== action.payload.questionID){
-                    newQuestionsArray.push(question);
-                }
+            return state.map(form => {
+                return form.formID === action.payload.formID
+                ? {...form, questions: form.questions.filter(q => q.id !== action.payload.questionID)}
+                : form
             })
-            form.questions = newQuestionsArray
+
+            // return(state.map(form => {
+            //     if(form.formID === action.payload.formID){
+            //         return(form.questions.map(question => {
+            //             if(question.id !== action.payload.questionID){
+            //                 return question
+            //             }
+            //         }))
+            //     }
+            //     return form
+            // }))
+
+
+            // const form = state.find(f => f.formID === action.payload.formID);
+            // const newQuestionsArray = [];
+            // form.questions.forEach(question => {
+            //     if (question.id !== action.payload.questionID){
+            //         newQuestionsArray.push(question);
+            //     }
+            // })
+            // form.questions = newQuestionsArray
         })
 })
 

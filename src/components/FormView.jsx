@@ -34,8 +34,8 @@ const FormView = () => {
         <div>
             <h2>FormView</h2>
             
-            <Link to={`/forms/${formID}/add-question`}>Add Question</Link>
-            <button onClick={handleAddQuestion}>Add question</button>
+      
+            
             <h3 className="form-name">{form.name}</h3>
   
             {form && (
@@ -49,6 +49,7 @@ const FormView = () => {
                     
                 </div>
             )}
+            <button className="add-question-button" onClick={handleAddQuestion}>Add question</button>
 
         </div>
     )
