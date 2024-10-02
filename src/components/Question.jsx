@@ -140,7 +140,13 @@ const Question = (props) => {
             )}
             
             <button onClick={handleSaveQuestion}>{editMode ? "Save" : "Edit"}</button>
-            {editMode && ( <button onClick={handleDelete}>Delete</button>)}
+            {editMode && (
+                <>
+                    <button onClick={toggleEdit}>Cancel</button>
+                    <button onClick={handleDelete}>Delete</button>
+                </> 
+                
+                )}
         </div>
 
     )
