@@ -26,11 +26,11 @@ const initialState = [
         },
     
         {
-            id: '5',
-            type: 'multiple-choice',
-            text: 'Tycker du ett eller 2',
-            options: ['val 1', 'val 2']
-            }
+        id: '5',
+        type: 'multiple-choice',
+        text: 'Tycker du ett eller 2',
+        options: ['val 1', 'val 2']
+        }
         ]
     }
 ];

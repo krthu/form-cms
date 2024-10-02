@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { actions } from "../features/forms";
+import './FormList.css'
 
 
 const FormList = () => {
@@ -19,14 +20,18 @@ const FormList = () => {
 
 
     return(
-        <div>
-            <h2>FormList</h2>
-            <button onClick={handleCreateNewForm}>New Form</button>
-            <input type="text" value={newFormInputValue} onChange={(e) => setNewFormInputValue(e.target.value)} />
+        <div className="form-list-container">
+                  <h2>FormList</h2>
+            <div className="add-form-container">
+      
+            <input  type="text" value={newFormInputValue} onChange={(e) => setNewFormInputValue(e.target.value)} />
+                <button onClick={handleCreateNewForm}>New Form</button>
+            </div>
+            
             {forms && (
-                <ul>
+                <ul className="form-list">
                     {forms.map((form) => (
-                        <li key={form.formID} ><Link to={`forms/${form.formID}`}> {form.name} </Link></li>
+                        <Link to={`forms/${form.formID}`} key={form.formID}><li  className="form-list-item" > {form.name} </li></Link>
                     ))}
                     
                 </ul>

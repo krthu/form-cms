@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import './FormView.css'
 
 import { Link, useParams } from "react-router-dom";
 
@@ -20,21 +21,25 @@ const FormView = () => {
     return (
         <div>
             <h2>FormView</h2>
-            <Link to={`/forms/${formID}/add-question`}>Add Question</Link>
             
+            <Link to={`/forms/${formID}/add-question`}>Add Question</Link>
+            <h3 className="form-name">{form.name}</h3>
+  
             {form && (
-                <div>
-                    <h4>Questions</h4>
+                <div className="questions-container">
+
+
                     {form.questions.map((question) => (
-                        <div key={question.id}>
+                        <div key={question.id} className="question">
                             <h3>{question.text}</h3>
                             {question.type === 'text' && (
                                 <input type="text"
+                                placeholder="Svar"
                                     
                                 />
                             )}
                             {question.type === 'multiple-choice' && (
-                                <div>
+                                <div className='options-container'>
                                     {question.options.map(( option, index) => (
                                     <label key={index}>{option}
                                         <input 
@@ -50,6 +55,7 @@ const FormView = () => {
                         
                         </div>
                     ))}
+                    
                 </div>
             )}
 
