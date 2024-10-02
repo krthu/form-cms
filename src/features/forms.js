@@ -4,9 +4,10 @@ import { act } from "react-dom/test-utils";
 const addForm = createAction('add form');
 const addQuestion = createAction('add question');
 const editQuestion = createAction('edit question');
+const deleteQuestion = createAction('delete question');
 
 
-const actions = {addForm, addQuestion, editQuestion}
+const actions = {addForm, addQuestion, editQuestion, deleteQuestion}
 
 const initialState = [
     {
@@ -121,6 +122,17 @@ const formsReducer = createReducer(initialState, builder => {
 
             // return newState;
             // const question = form.questions.find(question.id === action.payload.id)
+        })
+
+        .addCase(deleteQuestion, (state, action) => {
+            const form = state.find(f => f.formID === action.payload.formID);
+            const newQuestionsArray = [];
+            form.questions.forEach(question => {
+                if (question.id !== action.payload.questionID){
+                    newQuestionsArray.push(question);
+                }
+            })
+            form.questions = newQuestionsArray
         })
 })
 

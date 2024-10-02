@@ -31,7 +31,7 @@ const FormView = () => {
 
 
                     {form.questions.map((question) => (
-                        <Question question={question} formID={formID}/>
+                        <Question question={question} formID={formID} key={question.id}/>
    
                     ))}
                     

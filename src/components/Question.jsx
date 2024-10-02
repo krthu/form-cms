@@ -52,6 +52,13 @@ const Question = (props) => {
         // }
 
     }
+    const handleDelete = () => {
+        const deletePayload = {
+            formID: formID,
+            questionID: question.id
+        }
+        dispatch(actions.deleteQuestion(deletePayload))
+    }
     return (
         <div key={question.id}>
             {editMode ? (
@@ -102,7 +109,7 @@ const Question = (props) => {
                             )}
                         </div>
                     )}
-
+                
                 </div>
 
             ) : (
@@ -131,7 +138,9 @@ const Question = (props) => {
 
                 </div>
             )}
+            
             <button onClick={handleSaveQuestion}>{editMode ? "Save" : "Edit"}</button>
+            {editMode && ( <button onClick={handleDelete}>Delete</button>)}
         </div>
 
     )
