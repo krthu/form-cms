@@ -3,6 +3,9 @@ import { QUESTION_TYPES } from "../features/questionTypes";
 import { QUESTION_TYPE } from "../features/questionTypes";
 import { useDispatch } from "react-redux";
 import { actions } from "../features/forms";
+import TextQuestion from "./TextQuestion";
+import MultipleChoiceQuestion from "./MultipleChoiceQuestion.jsx";
+import EditQuestionTypeSection from "./EditQuestionTypeSection.jsx";
 
 const Question = (props) => {
     const question = props.question;
@@ -10,9 +13,12 @@ const Question = (props) => {
 
     const [editMode, setEditMode] = useState(false)
     const [questionText, setQuestionText] = useState(question.text || '');
-    const [choiceText, setChoiceText] = useState('');
+    // const [choiceText, setChoiceText] = useState('');
     const [type, setType] = useState(question.type || QUESTION_TYPES[0].value);
     const [choices, setChoices] = useState(question.options || []);
+
+
+
     const dispatch = useDispatch();
 
 
@@ -20,29 +26,29 @@ const Question = (props) => {
         setEditMode(!editMode);
     }
 
-    const handleChoiceAdded = () => {
-        if (choiceText.trim() !== '') {
-            setChoices(prevChoices => [...prevChoices, choiceText]);
-            setChoiceText('');
-        }
-    }
+    // const handleChoiceAdded = () => {
+    //     if (choiceText.trim() !== '') {
+    //         setChoices(prevChoices => [...prevChoices, choiceText]);
+    //         setChoiceText('');
+    //     }
+    // }
 
     const handleSaveQuestion = () => {
-        if (editMode){
+        if (editMode) {
             const newQuestion = {
                 id: question.id,
                 formID: formID,
-                text: questionText, 
+                text: questionText,
                 type: type
             }
-    
+
             if (type === QUESTION_TYPE.MULTIPLE_CHOICE.key) {
                 newQuestion.options = choices
             }
-        
+
             dispatch(actions.editQuestion(newQuestion));
-            
-        } 
+
+        }
         toggleEdit();
     }
     const handleDelete = () => {
@@ -53,97 +59,75 @@ const Question = (props) => {
         dispatch(actions.deleteQuestion(deletePayload))
     }
 
-    const handleRemoveOption = (indexToRemove) => {
-        setChoices(choices.filter((choise, index) => index !== indexToRemove))
+    // const handleRemoveOption = (indexToRemove) => {
+    //     setChoices(choices.filter((choise, index) => index !== indexToRemove))
+    // }
+
+    const renderQuestion = () => {
+        switch (type) {
+            case QUESTION_TYPE.TEXT.key:
+                return (
+                    <TextQuestion
+                        editMode={editMode}
+                        questionText={questionText}
+                        setQuestionText={setQuestionText}
+                        type={type}
+                        setType={setType}
+                    />
+
+                );
+            case QUESTION_TYPE.MULTIPLE_CHOICE.key:
+                return (
+                    <MultipleChoiceQuestion
+                        editMode={editMode}
+                        questionText={questionText}
+                        setQuestionText={setQuestionText}
+                        type={type}
+                        setType={setType}
+                        choices={choices}
+                        setChoices={setChoices}
+                    />
+                );
+
+            default:
+                return (
+                    <div>Unknown question type!</div>
+                )
+        }
     }
 
 
-    return (
-        <div key={question.id}>
-            {editMode ? (
-                <div className="question">
 
+
+    return (
+
+        <div key={question.id} className="question">
+            {editMode ? (
+                <>
                     <input
                         type="text"
                         value={questionText}
                         onChange={(e) => { setQuestionText(e.target.value) }}
                     />
-                    {/* Egen component? */}
-                    <div className="type-section">
-                        <label>Type</label>
-                        <select
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}>
-                            {QUESTION_TYPES.map((questionType) => (
-                                <option key={questionType.value} value={questionType.value}>
-                                    {questionType.label}
-                                </option>
-                            ))}
-
-                        </select>
-                    </div>
-
-                    {type === QUESTION_TYPE.MULTIPLE_CHOICE.key && (
-                        <div>
-                            {/* Egen component? */}
-                            <input
-                                type="text"
-                                value={choiceText}
-                                onChange={(e) => setChoiceText(e.target.value)}
-                                placeholder="option"
-                            />
-                            <button onClick={handleChoiceAdded}>Add choice</button>
-
-                            {choices.length !== 0 && (
-                                <div>
-                                    <h3>Options</h3>
-                                    <ul className="options-list">
-                                        {choices.map((choice, index) => (
-                                            <li key={index}>{choice} <button onClick={() => handleRemoveOption(index)}>X</button></li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                
-                </div>
-
+                    <EditQuestionTypeSection type={type} setType={setType} />
+                </>
             ) : (
-                <div className="question">
-                    <h3>{question.text}</h3>
-                    {question.type === 'text' && (
-                        <input type="text"
-                            placeholder="Svar"
-
-                        />
-                    )}
-                    {question.type === 'multiple-choice' && (
-                        <div className='options-container'>
-                            {question.options.map((option, index) => (
-                                <label key={index}>{option}
-                                    <input
-                                        type="radio"
-                                        name={question.id}
-                                    />
-
-                                </label>
-                            ))}
-                        </div>
-
-                    )}
-
-                </div>
+                <h3>{question.text}</h3>
             )}
+
+            {renderQuestion()}
+
+
+
             <div className="button-container">
                 <button onClick={handleSaveQuestion}>{editMode ? "Save" : "Edit"}</button>
                 {editMode && (
                     <>
                         <button onClick={toggleEdit}>Cancel</button>
                         <button onClick={handleDelete} className="question-delete-button">Delete</button>
-                    </> 
-                    
-                    )}
+                    </>
+
+                )}
             </div>
         </div>
 
