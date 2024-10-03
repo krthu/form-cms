@@ -3,12 +3,14 @@ import { act } from "react-dom/test-utils";
 
 const addForm = createAction('add form');
 const editForm = createAction('edit form');
+const deleteForm = createAction('delete form');
 const addQuestion = createAction('add question');
 const editQuestion = createAction('edit question');
 const deleteQuestion = createAction('delete question');
 
 
-const actions = { addForm, editForm, addQuestion, editQuestion, deleteQuestion }
+
+const actions = { addForm, editForm, deleteForm, addQuestion, editQuestion, deleteQuestion }
 
 const initialState = [
     {
@@ -74,6 +76,10 @@ const formsReducer = createReducer(initialState, builder => {
                     ? { ...form, name: action.payload.name }
                     : form
             });
+        })
+
+        .addCase(deleteForm, (state, action) => {
+            return state.filter(( form => form.formID != action.payload));
         })
 
         .addCase(addQuestion, (state, action) => {

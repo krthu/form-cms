@@ -11,31 +11,42 @@ const FormList = () => {
     const dispatch = useDispatch();
 
     const handleCreateNewForm = () => {
-        if (newFormInputValue.trim() === ''){
+        if (newFormInputValue.trim() === '') {
             return
         }
         dispatch(actions.addForm(newFormInputValue));
     }
 
+    const handleDeleteForm = (formID) => {
+        dispatch(actions.deleteForm(formID));
+    }
 
 
-    return(
+
+    return (
         <div className="form-list-container">
-                  <h2>FormList</h2>
+            <h2>FormList</h2>
             <div className="add-form-container">
-      
-            <input  type="text" value={newFormInputValue} onChange={(e) => setNewFormInputValue(e.target.value)} />
+
+                <input type="text" value={newFormInputValue} onChange={(e) => setNewFormInputValue(e.target.value)} />
                 <button onClick={handleCreateNewForm}>New Form</button>
             </div>
-            
+
             {forms && (
                 <ul className="form-list">
                     {forms.map((form) => (
-                        <Link to={`forms/${form.formID}`} key={form.formID}><li  className="form-list-item" > {form.name} </li></Link>
+
+                        <li className="form-list-item" key={form.formID}>
+                            <Link to={`forms/${form.formID}`}>
+                                <p className="list-form-name">{form.name} </p>
+                            </Link>
+                            <button className="delete delete-form" onClick={() => handleDeleteForm(form.formID)}>Delete</button>
+                        </li>
+
                     ))}
-                    
+
                 </ul>
-            
+
             )}
 
 
