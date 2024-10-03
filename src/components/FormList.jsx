@@ -21,8 +21,6 @@ const FormList = () => {
         dispatch(actions.deleteForm(formID));
     }
 
-
-
     return (
         <div className="form-list-container">
             <h2>FormList</h2>
@@ -42,14 +40,9 @@ const FormList = () => {
                             </Link>
                             <button className="delete delete-form" onClick={() => handleDeleteForm(form.formID)}>Delete</button>
                         </li>
-
                     ))}
-
                 </ul>
-
             )}
-
-
         </div>
     )
 };
