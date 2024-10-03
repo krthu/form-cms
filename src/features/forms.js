@@ -1,4 +1,5 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
+import { QUESTION_TYPE } from "./questionTypes";
 
 
 const addForm = createAction('add form');
@@ -19,8 +20,15 @@ const initialState = [
         questions: [{
             id: '1',
             type: 'text',
-            text: 'Kalle du?'
-        }]
+            text: 'Vad tycker du var bra med evenemanget?'
+        },{
+            id: 10,
+            type: QUESTION_TYPE.MULTIPLE_CHOICE.key,
+            text: 'Vilken Pokemon väljer du?',
+            options: ['Bulbasaur', 'Charmander', 'Squirtle']
+        }
+    
+        ]
     },
     {
         formID: '2',
@@ -34,7 +42,7 @@ const initialState = [
         {
             id: '5',
             type: 'multiple-choice',
-            text: 'Tycker du ett eller 2',
+            text: 'Tycker du 1 eller 2',
             options: ['val 1', 'val 2']
         }
         ]

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './App.css'
 import { useDispatch } from 'react-redux'
 import { actions } from './features/forms.js';
-import CreateQuestion from './components/CreateQuestion';
+// import CreateQuestion from './components/CreateQuestion';
 import FormView from './components/FormView.jsx';
 import FormList from './components/FormList.jsx';
 import { Routes, Route, Link } from 'react-router-dom';
@@ -64,7 +64,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FormList />}/>
           <Route path="/forms/:formID" element={<FormView />}/>
-          <Route path="/forms/:formID/add-question" element={<CreateQuestion />} />
+          {/* <Route path="/forms/:formID/add-question" element={<CreateQuestion />} /> */}
 
           {/* Default route för att hantera 404 */}
           <Route path="*" element={<FormList />} />

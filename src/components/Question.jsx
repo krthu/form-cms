@@ -14,7 +14,7 @@ const Question = (props) => {
     const [editMode, setEditMode] = useState(false)
     const [questionText, setQuestionText] = useState(question.text || '');
     // const [choiceText, setChoiceText] = useState('');
-    const [type, setType] = useState(question.type || QUESTION_TYPES[0].value);
+    const [type, setType] = useState(question.type || QUESTION_TYPE.TEXT.key);
     const [choices, setChoices] = useState(question.options || []);
 
 
@@ -23,7 +23,16 @@ const Question = (props) => {
 
 
     const toggleEdit = () => {
+       
+       // setDefaultState()
+        
         setEditMode(!editMode);
+    }
+
+    const setDefaultState = () => {
+        setQuestionText(question.text || '')
+        setChoices(question.options || []);
+        setType(question.type || QUESTION_TYPE.TEXT.key)
     }
 
     // const handleChoiceAdded = () => {
@@ -59,20 +68,12 @@ const Question = (props) => {
         dispatch(actions.deleteQuestion(deletePayload))
     }
 
-    // const handleRemoveOption = (indexToRemove) => {
-    //     setChoices(choices.filter((choise, index) => index !== indexToRemove))
-    // }
-
     const renderQuestion = () => {
         switch (type) {
             case QUESTION_TYPE.TEXT.key:
                 return (
                     <TextQuestion
                         editMode={editMode}
-                        questionText={questionText}
-                        setQuestionText={setQuestionText}
-                        type={type}
-                        setType={setType}
                     />
 
                 );
@@ -80,10 +81,7 @@ const Question = (props) => {
                 return (
                     <MultipleChoiceQuestion
                         editMode={editMode}
-                        questionText={questionText}
-                        setQuestionText={setQuestionText}
-                        type={type}
-                        setType={setType}
+
                         choices={choices}
                         setChoices={setChoices}
                     />

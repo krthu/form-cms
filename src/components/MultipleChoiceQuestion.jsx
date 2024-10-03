@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-const MultipleChoiceQuestion = ({ editMode, questionText, setQuestionText, type, setType, choices, setChoices }) => {
+const MultipleChoiceQuestion = ({ editMode, questionText, choices, setChoices }) => {
 
     const [choiceText, setChoiceText] = useState('');
     const handleChoiceAdded = () => {
@@ -18,14 +18,9 @@ const MultipleChoiceQuestion = ({ editMode, questionText, setQuestionText, type,
         <>
             {editMode ? (
                 <>
-                    {/* <input
-                        type="text"
-                        value={questionText}
-                        onChange={(e) => { setQuestionText(e.target.value) }}
-                    /> */}
-                    {/* <EditQuestionTypeSection type={type} setType={setType} /> */}
+
                     <div>
-                        {/* Egen component? */}
+                       
                         <input
                             type="text"
                             value={choiceText}
