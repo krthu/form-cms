@@ -1,0 +1,59 @@
+
+.form-list-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+}
+
+.add-form-container{
+    display: flex;
+ 
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+
+}
+
+
+.form-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+   
+    
+}
+
+.form-list-item{
+   
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-form{
+    margin-left: auto;
+    align-self: stretch;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    border-left: 1px solid black;
+}
+
+.form-list a{
+    flex-grow: 1;
+
+    padding: 0;
+}
+
+.list-form-name {
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    
+    
+    
+
+}
