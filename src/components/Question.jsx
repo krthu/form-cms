@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { QUESTION_TYPES } from "../features/questionTypes";
+import { QUESTION_TYPE } from "../features/questionTypes";
 import { useDispatch } from "react-redux";
 import { actions } from "../features/forms";
 
@@ -35,7 +36,7 @@ const Question = (props) => {
                 type: type
             }
     
-            if (type === 'multiple-choice') {
+            if (type === QUESTION_TYPE.MULTIPLE_CHOICE.key) {
                 newQuestion.options = choices
             }
         
@@ -82,7 +83,7 @@ const Question = (props) => {
                         </select>
                     </div>
 
-                    {type === 'multiple-choice' && (
+                    {type === QUESTION_TYPE.MULTIPLE_CHOICE.key && (
                         <div>
                             {/* Egen component? */}
                             <input

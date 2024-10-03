@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { QUESTION_TYPES } from "../features/questionTypes";
 import { actions } from "../features/forms";
+import { QUESTION_TYPE } from "../features/questionTypes";
 
 const EditQuestion = (props) => {
     const question = props.question;
@@ -31,7 +32,8 @@ const EditQuestion = (props) => {
                 type: type
             }
     
-            if (type === 'multiple-choice') {
+            // if (type === 'multiple-choice') {
+                if (type === QUESTION_TYPE.MULTIPLE_CHOICE.key) {
                 newQuestion.options = choices
             }
         
@@ -67,8 +69,8 @@ const EditQuestion = (props) => {
             <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}>
-                {QUESTION_TYPES.map((questionType) => (
-                    <option key={questionType.value} value={questionType.value}>
+                {QUESTION_TYPE.map((questionType) => (
+                    <option key={questionType.key} value={questionType.key}>
                         {questionType.label}
                     </option>
                 ))}
@@ -76,7 +78,7 @@ const EditQuestion = (props) => {
             </select>
         </div>
 
-        {type === 'multiple-choice' && (
+        {type === QUESTION_TYPE.MULTIPLE_CHOICE.label && (
             <div>
                 {/* Egen component? */}
                 <input
