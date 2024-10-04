@@ -23,10 +23,13 @@ const Question = (props) => {
 
 
     const toggleEdit = () => {
-       
-       // setDefaultState()
+        let mode = !editMode;
         
-        setEditMode(!editMode);
+       if (mode){
+        setDefaultState();
+       }
+        
+        setEditMode(mode);
     }
 
     const setDefaultState = () => {

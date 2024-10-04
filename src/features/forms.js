@@ -9,8 +9,6 @@ const addQuestion = createAction('add question');
 const editQuestion = createAction('edit question');
 const deleteQuestion = createAction('delete question');
 
-
-
 const actions = { addForm, editForm, deleteForm, addQuestion, editQuestion, deleteQuestion }
 
 const initialState = [
@@ -19,7 +17,7 @@ const initialState = [
         name: 'Utvärdering 1',
         questions: [{
             id: '1',
-            type: 'text',
+            type: QUESTION_TYPE.TEXT.key,
             text: 'Vad tycker du var bra med evenemanget?'
         },{
             id: 10,
@@ -35,13 +33,13 @@ const initialState = [
         name: 'Utvärdering 2',
         questions: [{
             id: '3',
-            type: 'text',
+            type: QUESTION_TYPE.TEXT.key,
             text: 'Vad heter du?'
         },
 
         {
             id: '5',
-            type: 'multiple-choice',
+            type: QUESTION_TYPE.MULTIPLE_CHOICE.key,
             text: 'Tycker du 1 eller 2',
             options: ['val 1', 'val 2']
         }
@@ -103,15 +101,7 @@ const formsReducer = createReducer(initialState, builder => {
 
             });
             return newState;
-            // Worked !
-            // const formToAddTo = state.find(form =>form.formID === action.payload.formID);
 
-
-            // if (formToAddTo){
-            //     const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options)
-            //     formToAddTo.questions.push(newQuestion);
-            //    // state.push(newQuestion)
-            // }
         })
 
         .addCase(editQuestion, (state, action) => {
@@ -132,23 +122,6 @@ const formsReducer = createReducer(initialState, builder => {
             })
             return newState;
 
-
-            // const form = state.find(form => form.formID === action.payload.formID)
-
-
-
-            // const newQuestionsArray = []
-            // form.questions.forEach(question => {
-            //     if (question.id !== action.payload.id){
-            //         newQuestionsArray.push(question);
-            //     } else{
-            //         const newQuestion = createNewQuestion(action.payload.type, action.payload.text, action.payload.options, action.payload.id)
-            //         newQuestionsArray.push(newQuestion);
-            //     }
-            // })
-
-            // form.questions = newQuestionsArray;
-
         })
 
         .addCase(deleteQuestion, (state, action) => {
@@ -158,26 +131,6 @@ const formsReducer = createReducer(initialState, builder => {
                     : form
             })
 
-            // return(state.map(form => {
-            //     if(form.formID === action.payload.formID){
-            //         return(form.questions.map(question => {
-            //             if(question.id !== action.payload.questionID){
-            //                 return question
-            //             }
-            //         }))
-            //     }
-            //     return form
-            // }))
-
-
-            // const form = state.find(f => f.formID === action.payload.formID);
-            // const newQuestionsArray = [];
-            // form.questions.forEach(question => {
-            //     if (question.id !== action.payload.questionID){
-            //         newQuestionsArray.push(question);
-            //     }
-            // })
-            // form.questions = newQuestionsArray
         })
 })
 

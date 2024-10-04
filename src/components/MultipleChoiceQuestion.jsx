@@ -18,9 +18,7 @@ const MultipleChoiceQuestion = ({ editMode, questionText, choices, setChoices })
         <>
             {editMode ? (
                 <>
-
                     <div>
-                       
                         <input
                             type="text"
                             value={choiceText}
@@ -56,12 +54,8 @@ const MultipleChoiceQuestion = ({ editMode, questionText, choices, setChoices })
                             ))}
                     
                         </div>
-
             )}
-              
-
         </>
-
     )
 }
 
