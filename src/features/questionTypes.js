@@ -3,10 +3,9 @@
     {value: 'multiple-choice', label: 'Multiple-choice'}
  ];
 
- export const QUESTION_TYPE = {
-   NORMAL : "normal",
-   FETCHING: "fetching",
-   SUCCESS: "success",
-   FAILURE: "failure"
 
+
+ export const QUESTION_TYPE = {
+   TEXT : { key :"text", label: "Text"},
+   MULTIPLE_CHOICE: { key: "multiple-choice", label: "Multiple Choice"}
 }
